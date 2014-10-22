@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 public class MainActivity extends ActionBarActivity {
 
+	private GraphView graphView;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        graphView = new GraphView(this);
+        setContentView(graphView);
     }
 
 
