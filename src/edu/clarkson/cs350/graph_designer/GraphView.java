@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +23,13 @@ import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 import org.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
 import org.metalev.multitouch.controller.MultiTouchEntity;
 
+/*
+ * Known Bugs:
+ * TODO: Random nodes created when dragging an existing node
+ * 			Seems to be because the multi-touch library doesn't move the Node object to your finger.
+ * TODO: If the user just taps with two fingers, a node is created at the midpoint between them.
+ */
+
 public class GraphView extends View implements
 		MultiTouchObjectCanvas<MultiTouchEntity> {
 
@@ -32,13 +40,16 @@ public class GraphView extends View implements
 			this);
 
 	private ArrayList<GraphNodeEntity> nodes = new ArrayList<GraphNodeEntity>();
+	private ArrayList<GraphEdgeEntity> edges = new ArrayList<GraphEdgeEntity>();
 
 	private PointInfo currTouchPoint = new PointInfo();
 	private Paint mLinePaintTouchPointCircle = new Paint();
 
 	private static final float SCREEN_MARGIN = 100;
 
-	private GraphNodeEntity currentDrag = new GraphNodeEntity(0,0,mLinePaintTouchPointCircle);
+	private GraphNodeEntity currentDragNode = new GraphNodeEntity(-99,-99,mLinePaintTouchPointCircle);
+	
+	private boolean dragging = false;
 	
 	private int width, height, displayWidth, displayHeight;
 
@@ -84,8 +95,7 @@ public class GraphView extends View implements
 		/* This method is called any time the screen needs to be re-drawn
 		 * (when invalidate() is called).
 		 */
-		Log.d("cs350-graph", "onDraw called");
-		Log.d("cs350-cur", "nodes: " + nodes.toString());
+		//Log.d("cs350-graph", "nodes: " + nodes.toString());
 		
 		super.onDraw(canvas);
 		canvas.drawColor(Color.BLACK);
@@ -94,8 +104,11 @@ public class GraphView extends View implements
 		for (GraphNodeEntity x : nodes) {
 			x.draw(canvas);
 		}
+		for (GraphEdgeEntity x : edges) {
+			x.draw(canvas);
+		}
 		
-		// Set xs and ys to arrays of points covered by the user's finger
+		// Set xs and ys to arrays of points, one for each finger
 		// Set numPoints to the number of fingers touching the screen
 		float[] xs = currTouchPoint.getXs();
 		float[] ys = currTouchPoint.getYs();
@@ -103,26 +116,53 @@ public class GraphView extends View implements
 
 		if (numPoints == 2) {
 			// draw line connecting the two nodes
+			
+			GraphNodeEntity nodeUnderFinger1 = null;
+			GraphNodeEntity nodeUnderFinger2 = null; 
+			
+			for (GraphNodeEntity gne : nodes) {
+				for (int i=0; i < xs.length; i++) {
+					if (gne.containsPoint(xs[i], ys[i])) {
+						if (nodeUnderFinger1 == null)
+							nodeUnderFinger1 = gne;
+						else
+							nodeUnderFinger2 = gne;
+					}
+				}
+			}
+			
+			if (nodeUnderFinger1 != null && nodeUnderFinger2 != null){
+				GraphEdgeEntity newEdge = new GraphEdgeEntity(nodeUnderFinger1, nodeUnderFinger2, mLinePaintTouchPointCircle); 
+				edges.add(newEdge);
+				newEdge.draw(canvas);
+			}
 		} else if (numPoints == 1) {
-			// draw a new node
-			Log.d("cs350-graph", "Creating node at " + xs[0] + "," + ys[0]);
-			currentDrag.setXY(xs[0], ys[0]);
-			currentDrag.draw(canvas);
+			if (getDraggableObjectAtPoint(currTouchPoint) == null && !dragging){
+				// draw a new node
+				currentDragNode.setXY(xs[0], ys[0]);
+				currentDragNode.draw(canvas);
+			}
 		}
 	}
-
+ 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_UP){
+		if (event.getAction() == MotionEvent.ACTION_UP
+				&& currentDragNode.getCenterX() >= 0
+				&& !dragging){
 			// If the touch action is lifting their finger
-			nodes.add(currentDrag);
-			currentDrag = new GraphNodeEntity(0,0,mLinePaintTouchPointCircle);
+			// and "currentDragNode" has changed
+			Log.d("cs350-graph", "Adding new node " + currentDragNode.toString() + " to nodes list");
+			nodes.add(currentDragNode);
+			currentDragNode = new GraphNodeEntity(-99,-99,mLinePaintTouchPointCircle);
 		}
+		invalidate();
 		return multiTouchController.onTouchEvent(event);
 	}
 
 	@Override
 	public MultiTouchEntity getDraggableObjectAtPoint(PointInfo touchPoint) {
+		Log.d("cs350-graph", "GraphView getDraggableObjectAtPoint called");
 		currTouchPoint.set(touchPoint);
 		invalidate();
 		
@@ -134,12 +174,12 @@ public class GraphView extends View implements
 		}
 		return null;
 	}
-
+	
 	@Override
 	public boolean pointInObjectGrabArea(PointInfo touchPoint,
 			MultiTouchEntity obj) {
 		Log.d("cs350-graph", "GraphView pointInObjectGrabArea called");
-		return false;
+		return obj.containsPoint(touchPoint.getX(), touchPoint.getY());
 	}
 
 	@Override
@@ -162,6 +202,7 @@ public class GraphView extends View implements
 		
 		currTouchPoint.set(touchPoint);
 		boolean ok = ((GraphNodeEntity) obj).setPos(newObjPosAndScale);
+		
 		if (ok)
 			invalidate();
 		return ok;
@@ -174,10 +215,12 @@ public class GraphView extends View implements
 		if (obj != null) {
 			// Received a valid node object,
 			// push it to the top of the stack
-			nodes.remove(obj);
-			nodes.add((GraphNodeEntity) obj);
+			dragging = true;
+			/*nodes.remove(obj);
+			nodes.add((GraphNodeEntity) obj);*/
 		} else {
 			// Drag stops
+			dragging = false;
 		}
 		invalidate();
 	}

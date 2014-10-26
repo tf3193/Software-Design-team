@@ -1,16 +1,10 @@
 package edu.clarkson.cs350.graph_designer;
 
-import java.util.ArrayList;
-
 import org.metalev.multitouch.controller.MultiTouchEntity;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.text.style.SuperscriptSpan;
-import android.util.Log;
 
 
 /**
@@ -19,10 +13,8 @@ import android.util.Log;
  *
  */
 public class GraphNodeEntity extends MultiTouchEntity {
-	private ArrayList<GraphNodeEntity> connectedNodes = new ArrayList<GraphNodeEntity>();
-
-	private static final int RADIUS = 50; //px
-	private static Paint paint;
+	private static final int RADIUS = 70; //px
+	private Paint paint;
 	
 	public GraphNodeEntity() {
 		super();
@@ -54,6 +46,14 @@ public class GraphNodeEntity extends MultiTouchEntity {
 		this.mCenterX = x;
 		this.mCenterY = y;
 	}
+	
+	@Override
+	public boolean containsPoint(float touchX, float touchY) {
+		float x_delta = touchX - mCenterX;
+		float y_delta = touchY - mCenterY;
+		
+		return (x_delta*x_delta) + (y_delta*y_delta) <= (RADIUS*RADIUS);
+	}
 
 	@Override
 	public void load(Context context, float startMidX, float startMidY) {
@@ -66,10 +66,14 @@ public class GraphNodeEntity extends MultiTouchEntity {
 		// TODO Auto-generated method stub
 
 	}
-
+	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
+		GraphNodeEntity obj = new GraphNodeEntity();
+		obj.mCenterX = this.mCenterX;
+		obj.mCenterY = this.mCenterY;
+		obj.paint = this.paint;
+		return obj;
 	}
 	
 	@Override
