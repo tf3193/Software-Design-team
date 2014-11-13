@@ -30,8 +30,8 @@ public class GraphNodeEntity extends MultiTouchEntity {
 	}
 
 	public GraphNodeEntity(float x, float y, Paint p) {
-		this.mCenterX = x;
-		this.mCenterY = y;
+		super.mCenterX = x;
+		super.mCenterY = y;
 		paint = p;
 	}
 

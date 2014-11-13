@@ -1,9 +1,11 @@
 package edu.clarkson.cs350.graph_designer;
 
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -13,10 +15,14 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         graphView = new GraphView(this);
-        setContentView(graphView);
+		setContentView(R.layout.activity_main);
+		
+        //setContentView(graphView);
     }
 
-
+    public void clickFunc(View view){
+    	setContentView(graphView);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

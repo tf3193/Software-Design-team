@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.clarkson.cs350.graph_designer.MainActivity" >
 
+    <View
+    class="edu.clarkson.cs350.graph_designer.GraphView.java"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+    />
+    
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

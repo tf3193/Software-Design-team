@@ -15,6 +15,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import org.metalev.multitouch.controller.MultiTouchController;
 import org.metalev.multitouch.controller.MultiTouchController.MultiTouchObjectCanvas;
@@ -76,7 +77,8 @@ public class GraphView extends View implements
 				metrics.widthPixels, metrics.heightPixels);
 		
 		// Manually adding a node to test
-		nodes.add(new GraphNodeEntity(100, 100, mLinePaintTouchPointCircle));
+		//nodes.add(new GraphNodeEntity(100, 100, mLinePaintTouchPointCircle));
+				
 	}
 
 	@Override
@@ -88,8 +90,7 @@ public class GraphView extends View implements
 		Log.d("cs350-cur", "nodes: " + nodes.toString());
 		
 		super.onDraw(canvas);
-		canvas.drawColor(Color.BLACK);
-		
+		canvas.drawColor(Color.BLUE);
 		// Draw every node in the "nodes" ArrayList
 		for (GraphNodeEntity x : nodes) {
 			x.draw(canvas);
@@ -101,14 +102,29 @@ public class GraphView extends View implements
 		float[] ys = currTouchPoint.getYs();
 		int numPoints = Math.min(currTouchPoint.getNumTouchPoints(), 2);
 
-		if (numPoints == 2) {
+		/*if (numPoints == 2) {
 			// draw line connecting the two nodes
 		} else if (numPoints == 1) {
 			// draw a new node
 			Log.d("cs350-graph", "Creating node at " + xs[0] + "," + ys[0]);
 			currentDrag.setXY(xs[0], ys[0]);
 			currentDrag.draw(canvas);
-		}
+		}*/
+		if (numPoints == 2) {
+			// draw line connecting the two nodes
+			} else if (numPoints == 1) {
+
+			GraphNodeEntity movent = (GraphNodeEntity) getDraggableObjectAtPoint(currTouchPoint);
+			if(movent == null){// draw a new node
+			Log.d("cs350-graph", "Creating node at " + xs[0] + "," + ys[0]);
+			currentDrag.setXY(xs[0], ys[0]);
+			currentDrag.draw(canvas);
+			}else{
+			Log.d("cs350-graph", "Moving node to " + xs[0] + "," + ys[0]);
+			movent.setXY(xs[0], ys[0]);
+			movent.draw(canvas);
+			}
+			}
 	}
 
 	@Override
