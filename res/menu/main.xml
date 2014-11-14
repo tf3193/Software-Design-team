@@ -10,6 +10,12 @@
     />
     
     <item
+        android:id="@+id/action_matrix"
+		android:orderInCategory="101"
+		android:title="Show Matrix"
+        app:showAsAction="never"
+		/>
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

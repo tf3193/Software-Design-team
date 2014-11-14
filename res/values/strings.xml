@@ -4,5 +4,7 @@
     <string name="app_name">CS350 Graph Designer</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_matrix">MatrixActivity</string>
+    <string name="title_activity_graph">Design your Graph</string>
 
 </resources>

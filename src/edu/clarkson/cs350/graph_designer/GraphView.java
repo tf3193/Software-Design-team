@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -33,7 +34,8 @@ import org.metalev.multitouch.controller.MultiTouchEntity;
 
 public class GraphView extends View implements
 		MultiTouchObjectCanvas<MultiTouchEntity> {
-
+	
+	private static final boolean DEBUG = true;
 	private static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
 	private int mUIMode = UI_MODE_ROTATE;
 
@@ -90,7 +92,6 @@ public class GraphView extends View implements
 
 		// Manually adding a node to test
 		// nodes.add(new GraphNodeEntity(100, 100, mLinePaintTouchPointCircle));
-
 	}
 
 	@Override
@@ -171,7 +172,7 @@ public class GraphView extends View implements
 	public MultiTouchEntity getDraggableObjectAtPoint(PointInfo touchPoint) {
 		Log.d("cs350-graph", "GraphView getDraggableObjectAtPoint called");
 		currTouchPoint.set(touchPoint);
-		invalidate();
+		//invalidate();
 
 		float x = touchPoint.getX(), y = touchPoint.getY();
 		for (GraphNodeEntity gne : nodes) {
@@ -234,4 +235,10 @@ public class GraphView extends View implements
 		invalidate();
 	}
 
+	public ArrayList<GraphNodeEntity> getNodes() {
+		return nodes;
+	}
+	public ArrayList<GraphEdgeEntity> getEdges() {
+		return edges;
+	}
 }

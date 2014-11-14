@@ -1,5 +1,7 @@
 package edu.clarkson.cs350.graph_designer;
 
+import java.io.Serializable;
+
 import org.metalev.multitouch.controller.MultiTouchEntity;
 
 import android.content.Context;
@@ -12,7 +14,8 @@ import android.graphics.Paint;
  * @author lee
  *
  */
-public class GraphNodeEntity extends MultiTouchEntity {
+public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
+	
 	private static final int RADIUS = 70; //px
 	private Paint paint;
 	
@@ -89,4 +92,5 @@ public class GraphNodeEntity extends MultiTouchEntity {
 	public String toString() {
 		return String.format("(%f, %f)", mCenterX, mCenterY);
 	}
+
 }

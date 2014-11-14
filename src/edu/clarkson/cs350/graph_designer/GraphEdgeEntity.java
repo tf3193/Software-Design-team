@@ -1,5 +1,7 @@
 package edu.clarkson.cs350.graph_designer;
 
+import java.io.Serializable;
+
 import org.metalev.multitouch.controller.MultiTouchEntity;
 
 import android.content.Context;
@@ -12,7 +14,7 @@ import android.util.Log;
  * @author lee
  *
  */
-public class GraphEdgeEntity extends MultiTouchEntity {
+public class GraphEdgeEntity extends MultiTouchEntity implements Serializable {
 	GraphNodeEntity node1;
 	GraphNodeEntity node2;
 	

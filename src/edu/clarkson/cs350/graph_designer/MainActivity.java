@@ -2,13 +2,13 @@ package edu.clarkson.cs350.graph_designer;
 
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends ActionBarActivity {
-    int clicked = 0;
 	private GraphView graphView;
 	
     @Override
@@ -16,27 +16,13 @@ public class MainActivity extends ActionBarActivity {
     	super.onCreate(savedInstanceState);
         graphView = new GraphView(this);
 		setContentView(R.layout.activity_main);
-		
-        //setContentView(graphView);
     }
 
     public void clickFunc(View view){
-    	clicked = 1;
-    	setContentView(graphView);
+    	Intent intent = new Intent(this, GraphActivity.class);
+    	startActivity(intent);
     }
  
-    //TODO this is very crude still needs to be edited was just a temp to see how this worked.
-    @Override
-    public void onBackPressed(){
-         if(clicked == 1){
-        	 clicked = 0;
-             setContentView(R.layout.activity_main);
-             //Change activity to previous view
-         }
-         else 
-             super.onBackPressed();
-    }
-    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
