@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_toRightOf="@+id/textView1"
-        android:text="Add nodes bro" 
+        android:text="Press to go to node screen" 
         android:onClick= "clickFunc"/>
 
 </RelativeLayout>
