@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.EditText;
 
 public class MainActivity extends ActionBarActivity {
 	private GraphView graphView;

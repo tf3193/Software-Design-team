@@ -6,7 +6,9 @@ import org.metalev.multitouch.controller.MultiTouchEntity;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 
 
 /**
@@ -27,13 +29,17 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 	public GraphNodeEntity(float x, float y, Paint p) {
 		super.mCenterX = x;
 		super.mCenterY = y;
-		paint = p;
+		
+		paint = new Paint();
+		paint.setColor(p.getColor());
+		paint.setStrokeWidth(p.getStrokeWidth());
+		paint.setStyle(p.getStyle());
+		paint.setAntiAlias(p.isAntiAlias());
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
 		//Log.d("cs350-graph", "GraphNodeEntity draw(canvas) called");
-		
 		canvas.drawCircle(this.getCenterX(),
 				  this.getCenterY(),
 				  RADIUS, paint);
@@ -48,6 +54,10 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 	public void setXY(float x, float y){
 		this.mCenterX = x;
 		this.mCenterY = y;
+	}
+	
+	public void setColor(int color){
+		paint.setColor(color);
 	}
 	
 	@Override

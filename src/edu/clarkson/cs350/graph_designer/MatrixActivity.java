@@ -1,12 +1,16 @@
 package edu.clarkson.cs350.graph_designer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 public class MatrixActivity extends Activity {
@@ -18,6 +22,7 @@ public class MatrixActivity extends Activity {
 	
 	int n = 0; // Cache the size of the matrix
 	Integer[][] rawMatrix;
+	Matrix jamaMatrix;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,8 @@ public class MatrixActivity extends Activity {
 			}
 		}
 		
+		jamaMatrix = new Matrix(matrixToDoubles(rawMatrix));
+		
 		// TODO: For testing, delete later
 //		nodes = new ArrayList<GraphNodeEntity>();
 //		edges = new ArrayList<GraphEdgeEntity>();
@@ -63,11 +70,13 @@ public class MatrixActivity extends Activity {
 //		
 		// END OF TEST
 		
-		TextView matrixTextView = (TextView) findViewById(R.id.matrixText);
-		TextView eigenVectorsView = (TextView) findViewById(R.id.eigenValuesLabel);
-		TextView eigenValuesTextView = (TextView) findViewById(R.id.eigenValuesText);
+		WebView matrixTextView = (WebView) findViewById(R.id.matrixText);
+		WebView eigenVectorsView = (WebView) findViewById(R.id.eigenVectorsText);
+		WebView eigenValuesTextView = (WebView) findViewById(R.id.eigenValuesText);
 		
-		matrixTextView.setText(matrixToString(rawMatrix));
+		matrixTextView.loadData(matrixToHtmlString(rawMatrix),"text/html","utf-8");
+		eigenVectorsView.loadData(matrixToHtmlString(jamaMatrix.eig().getV().getArray()),"text/html","utf-8");
+		eigenValuesTextView.loadData(Arrays.toString(jamaMatrix.eig().getRealEigenvalues()),"text/html","utf-8");
 	}
 	
 	private void populateMatrix(){
@@ -83,17 +92,44 @@ public class MatrixActivity extends Activity {
 		}
 	}
 	
-	private String matrixToString(Integer[][] rawMatrix2){
-		String s = "";
+	private String matrixToHtmlString(Integer[][] rawMatrix2){
+		String s = "<table border=1>";
 		
 		for (int i=0; i < n; i++){
+			s += "<tr>";
 			for (int j=0; j < n; j++){
-				s += " " + rawMatrix2[i][j];
+				s += "<td>" + rawMatrix2[i][j] + "</td>";
 			}
-			s += "\n";
+			s += "</tr>";
 		}
 		
 		return s;
+	}
+	
+	private String matrixToHtmlString(double[][] rawMatrix2){
+		String s = "<table border=1>";
+		
+		for (int i=0; i < n; i++){
+			s += "<tr>";
+			for (int j=0; j < n; j++){
+				s += "<td>" + rawMatrix2[i][j] + "</td>";
+			}
+			s += "</tr>";
+		}
+		
+		return s;
+	}
+	
+	private double[][] matrixToDoubles(Integer[][] rawMatrix2){
+		double[][] dblM = new double[n][n];
+		
+		for (int i=0; i < n; i++){
+			for (int j=0; j < n; j++){
+				dblM[i][j] = (double) rawMatrix2[i][j];
+			}
+		}
+		
+		return dblM;
 	}
 
 	@Override

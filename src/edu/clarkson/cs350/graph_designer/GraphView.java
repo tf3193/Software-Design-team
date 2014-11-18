@@ -78,7 +78,7 @@ public class GraphView extends View implements
 		// Set up the colors and line width of the circles and lines
 		mLinePaintTouchPointCircle.setColor(Color.YELLOW);
 		mLinePaintTouchPointCircle.setStrokeWidth(5);
-		mLinePaintTouchPointCircle.setStyle(Style.STROKE);
+		mLinePaintTouchPointCircle.setStyle(Style.FILL);
 		mLinePaintTouchPointCircle.setAntiAlias(true);
 		setBackgroundColor(Color.BLACK);
 
@@ -90,8 +90,16 @@ public class GraphView extends View implements
 				.min(metrics.widthPixels, metrics.heightPixels) : Math.max(
 				metrics.widthPixels, metrics.heightPixels);
 
-		// Manually adding a node to test
-		// nodes.add(new GraphNodeEntity(100, 100, mLinePaintTouchPointCircle));
+		// Manually adding nodes/edges to test
+		nodes.add(new GraphNodeEntity(100, 100, mLinePaintTouchPointCircle));
+		nodes.add(new GraphNodeEntity(500, 100, mLinePaintTouchPointCircle));
+		nodes.add(new GraphNodeEntity(300, 300, mLinePaintTouchPointCircle));
+		
+		edges.add(new GraphEdgeEntity(nodes.get(0), nodes.get(1), mLinePaintTouchPointCircle));
+		edges.add(new GraphEdgeEntity(nodes.get(0), nodes.get(2), mLinePaintTouchPointCircle));
+		edges.add(new GraphEdgeEntity(nodes.get(1), nodes.get(2), mLinePaintTouchPointCircle));
+		
+		nodes.get(0).setColor(Color.RED);
 	}
 
 	@Override
