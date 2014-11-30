@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -40,33 +44,37 @@ public class GraphActivity extends Activity {
 			Intent intent = new Intent(this, MatrixActivity.class);
 			Bundle bundle = new Bundle();
 			
-			ArrayList<GraphNodeEntity> nodes = graphView.getNodes();
-			ArrayList<GraphEdgeEntity> edges = graphView.getEdges();
-			
-			int n = nodes.size();
-			Integer[][] matrix = new Integer[n][n];
-			
-			// Fill with zeros first
-			for (int i=0; i<n; i++){
-				for (int j=0; j<n; j++){
-					matrix[i][j] = 0;
-				}
-			}
-			
-			// Set appropriate cells to 1
-			for (GraphEdgeEntity x : edges){
-				int i = nodes.indexOf(x.getNode1());
-				int j = nodes.indexOf(x.getNode2());
-				
-				matrix[i][j] = 1;
-				matrix[j][i] = 1; // Necessary for bi-directional graphs
-			}
-			
+			graphView.calculateMatrix();
+			double[][] matrix = graphView.getAdjMatrix();
 			bundle.putSerializable("matrix", matrix);
 			intent.putExtras(bundle);
-			intent.putExtra("size", n);
+			intent.putExtra("size", matrix.length);
 			
 			startActivity(intent);
+			return true;
+		}
+		if (id == R.id.qwalk){
+			if (item.getTitle().equals("Stop Walk")){
+				Log.d("cs350-thread", "Stopped walk");
+				graphView.stop_qwalk();
+				return true;
+			}
+			
+			final Runnable r = new Runnable() {
+				@Override
+				public void run() {
+					Log.d("cs350-thread", "Thread is running");
+					graphView.calculateMatrix();
+					graphView.qwalk_me();
+				}
+			};
+			
+			new Thread(r).start();
+//			
+//			graphView.calculateMatrix();
+//			graphView.qwalk_me();
+			item.setTitle("Stop Walk");
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

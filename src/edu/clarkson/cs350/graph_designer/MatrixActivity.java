@@ -3,26 +3,26 @@ package edu.clarkson.cs350.graph_designer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import org.apache.commons.math3.linear.EigenDecomposition;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 public class MatrixActivity extends Activity {
-	
-	//TODO: Find eigenvalues/eigenvectors of the matrix.
-	
 	ArrayList<GraphNodeEntity> nodes;
 	ArrayList<GraphEdgeEntity> edges;
 	
 	int n = 0; // Cache the size of the matrix
-	Integer[][] rawMatrix;
-	Matrix jamaMatrix;
+	double[][] rawMatrix;
+	RealMatrix realMatrix;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,50 +33,33 @@ public class MatrixActivity extends Activity {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		
-		n = (Integer) intent.getExtras().get("size");
-		
-		
 		Object[] tmpArr = (Object[]) bundle.getSerializable("matrix");
+		n = intent.getIntExtra("size", 0);
 		
-		rawMatrix = new Integer[n][n];
+		rawMatrix = new double[n][n];
 		
+		Log.d("cs350-matrix", "N: " + n);
+		Log.d("cs350-matrix", "Matrix2: " + Arrays.deepToString(tmpArr));
 		for (int i=0; i<n; i++){
+			Log.d("cs350-matrix", "i "+i);
 			for (int j=0; j<n; j++){
-				rawMatrix[i][j] = (Integer) ((Object[])tmpArr[i])[j];
+				Log.d("cs350-matrix", "j "+j);
+				rawMatrix[i][j] = ((double[])((Object[])tmpArr)[i])[j];
 			}
 		}
+		Log.d("cs350-matrix", "Matrix after: " + Arrays.deepToString(rawMatrix));
 		
-		jamaMatrix = new Matrix(matrixToDoubles(rawMatrix));
-		
-		// TODO: For testing, delete later
-//		nodes = new ArrayList<GraphNodeEntity>();
-//		edges = new ArrayList<GraphEdgeEntity>();
-//		
-//		GraphNodeEntity node1 = new GraphNodeEntity();
-//		GraphNodeEntity node2 = new GraphNodeEntity();
-//		GraphNodeEntity node3 = new GraphNodeEntity();
-//		
-//		GraphEdgeEntity edge12 = new GraphEdgeEntity(node1, node2, null);
-//		GraphEdgeEntity edge13 = new GraphEdgeEntity(node1, node3, null);
-//		GraphEdgeEntity edge23 = new GraphEdgeEntity(node2, node3, null);
-//		
-//		nodes.add(node1);
-//		nodes.add(node2);
-//		nodes.add(node3);
-//		
-//		edges.add(edge12);
-//		edges.add(edge13);
-//		edges.add(edge23);
-//		
-		// END OF TEST
-		
+		realMatrix = MatrixUtils.createRealMatrix(rawMatrix);
+
 		WebView matrixTextView = (WebView) findViewById(R.id.matrixText);
 		WebView eigenVectorsView = (WebView) findViewById(R.id.eigenVectorsText);
 		WebView eigenValuesTextView = (WebView) findViewById(R.id.eigenValuesText);
 		
+		EigenDecomposition eig = new EigenDecomposition(realMatrix);
+		
 		matrixTextView.loadData(matrixToHtmlString(rawMatrix),"text/html","utf-8");
-		eigenVectorsView.loadData(matrixToHtmlString(jamaMatrix.eig().getV().getArray()),"text/html","utf-8");
-		eigenValuesTextView.loadData(Arrays.toString(jamaMatrix.eig().getRealEigenvalues()),"text/html","utf-8");
+		eigenVectorsView.loadData(matrixToHtmlString(eig.getV().getData()),"text/html","utf-8");
+		eigenValuesTextView.loadData(Arrays.toString(eig.getRealEigenvalues()),"text/html","utf-8");
 	}
 	
 	private void populateMatrix(){

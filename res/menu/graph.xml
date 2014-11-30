@@ -8,5 +8,6 @@
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item android:id="@+id/matrixItem" android:title="Calculate Matrix" android:titleCondensed="Matrix"></item>
+    <item android:id="@+id/qwalk" android:title="Quantum Walk" android:titleCondensed="QWalk"></item>
 
 </menu>
