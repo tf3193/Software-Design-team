@@ -44,7 +44,7 @@ public class GraphEdgeEntity extends MultiTouchEntity implements Serializable {
 
 	@Override
 	public void draw(Canvas canvas) {
-		Log.d("cs350-edge", String.format("Values: %s | %s", node1, node2));
+		//Log.d("cs350-edge", String.format("Values: %s | %s", node1, node2));
 		canvas.drawLine(node1.getCenterX(), node1.getCenterY(),
 						node2.getCenterX(), node2.getCenterY(),
 						paint);
