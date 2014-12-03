@@ -9,9 +9,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

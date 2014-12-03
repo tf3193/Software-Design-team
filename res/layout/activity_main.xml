@@ -36,6 +36,7 @@
 	android:layout_height="wrap_content"
 	android:text="Make Graph"
 	android:textStyle="bold"
+	android:background="@drawable/mybutton"
 	android:layout_centerVertical="true"
 	android:layout_centerHorizontal="true"
 	android:onClick= "makeGraphFunc" />
@@ -50,6 +51,7 @@
 	android:layout_height="wrap_content"
 	android:text="Instructions"
 	android:textStyle="bold"
+	android:background="@drawable/mybutton"
 	android:layout_centerVertical="true"
 	android:layout_centerHorizontal="true"
 	android:onClick= "instructFunc" />
