@@ -9,11 +9,16 @@ import org.apache.commons.math3.linear.RealMatrix;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,6 +26,7 @@ import android.graphics.AvoidXfermode.Mode;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -68,6 +74,8 @@ public class GraphView extends SurfaceView implements
 	private boolean qwalkIsRunning = false;
 	
 	private double[][] matrix;
+	private final Resources res = getResources();
+	private final Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.graphbackground);
 	
 	// -------
 
@@ -92,7 +100,8 @@ public class GraphView extends SurfaceView implements
 		mLinePaintTouchPointCircle.setStrokeWidth(5);
 		mLinePaintTouchPointCircle.setStyle(Style.FILL);
 		mLinePaintTouchPointCircle.setAntiAlias(true);
-		setBackgroundColor(Color.BLUE);
+		setBackgroundResource(R.drawable.graphbackground);
+		//setBackgroundColor(Color.rgb(100, 0, 100));
 		
 		DisplayMetrics metrics = res.getDisplayMetrics();
 		this.displayWidth = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math
@@ -122,8 +131,9 @@ public class GraphView extends SurfaceView implements
 
 		super.onDraw(canvas);
 		canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-		canvas.drawColor(Color.BLUE);
+		Rect rect = new Rect(0,0,this.displayWidth,this.displayHeight);
+		canvas.drawBitmap(bitmap, null, rect, null);
+		//canvas.drawColor(Color.rgb(100, 0, 100));
 		// Draw every node in the "nodes" ArrayList
 		for (GraphNodeEntity x : nodes) {
 			x.draw(canvas);
@@ -153,10 +163,17 @@ public class GraphView extends SurfaceView implements
 				}
 			}
 			if (nodeUnderFinger1 != null && nodeUnderFinger2 != null) {
-				GraphEdgeEntity newEdge = new GraphEdgeEntity(nodeUnderFinger1,
-						nodeUnderFinger2, mLinePaintTouchPointCircle);
-				edges.add(newEdge);
-				newEdge.draw(canvas);
+				int edgeexist = checkforedge(nodeUnderFinger1, nodeUnderFinger2);
+				Log.d("cs350-graph", "edgeexist = " + edgeexist);
+				if(edgeexist != -1){
+					edges.remove(edgeexist); //somehow delete when touched
+					//invalidate();
+				}else{
+					GraphEdgeEntity newEdge = new GraphEdgeEntity(nodeUnderFinger1,
+							nodeUnderFinger2, mLinePaintTouchPointCircle);
+					edges.add(newEdge);
+					newEdge.draw(canvas);	
+				}
 			}
 		} 
 		/*else if (numPoints == 1) {
@@ -167,6 +184,17 @@ public class GraphView extends SurfaceView implements
 				currentDragNode.draw(canvas);
 			} 
 		}*/
+	}
+	
+	public int checkforedge(GraphNodeEntity n1, GraphNodeEntity n2){
+		int size = edges.size();
+		for(int i = 0; i<size; i++){
+			if((edges.get(i).getNode1() == n1 && edges.get(i).getNode2() == n2) ||
+					(edges.get(i).getNode1() == n2 && edges.get(i).getNode2() == n1)){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	@Override
