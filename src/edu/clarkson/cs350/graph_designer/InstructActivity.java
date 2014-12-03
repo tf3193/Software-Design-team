@@ -1,9 +1,11 @@
 package edu.clarkson.cs350.graph_designer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class InstructActivity extends Activity {
 
@@ -20,6 +22,10 @@ public class InstructActivity extends Activity {
 		return true;
 	}
 
+    public void mainMenuFunc(View view){
+    	Intent intent = new Intent(this, MainActivity.class);
+    	startActivity(intent);
+    }
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
