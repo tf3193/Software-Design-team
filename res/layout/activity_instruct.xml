@@ -19,6 +19,7 @@
 				android:layout_height="500dp"
 				android:text="Back to Menu"
 				android:textStyle="bold"
+				android:background="@drawable/mybutton"
 				android:layout_alignTop="@+id/widget37"
 				android:layout_alignParentRight="true"
 				android:onClick="mainMenuFunc" />
