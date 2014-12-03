@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class GraphActivity extends Activity {
+public class GraphActivity extends ActionBarActivity {
 	
 	private GraphView graphView;
 	private Thread qwalkThread;

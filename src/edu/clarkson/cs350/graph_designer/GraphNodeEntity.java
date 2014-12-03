@@ -40,9 +40,17 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 	@Override
 	public void draw(Canvas canvas) {
 		//Log.d("cs350-graph", "GraphNodeEntity draw(canvas) called");
-		canvas.drawCircle(this.getCenterX(),
-				  this.getCenterY(),
-				  RADIUS, paint);
+		float x = this.getCenterX();
+		float y = this.getCenterY();
+		canvas.drawCircle(x,y,RADIUS,paint);
+		String str = "("+x+","+y+")";
+		int size = str.length();
+		Paint difpaint = new Paint();
+		difpaint.setStrokeWidth(paint.getStrokeWidth());
+		difpaint.setColor(Color.WHITE);
+		difpaint.setStyle(paint.getStyle());
+		difpaint.setAntiAlias(paint.isAntiAlias());
+		canvas.drawText(str, x-RADIUS, y-RADIUS, difpaint);
 	}
 	
 	public void setX(float x){
