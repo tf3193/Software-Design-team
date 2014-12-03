@@ -1,12 +1,15 @@
 package edu.clarkson.cs350.graph_designer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.linear.Array2DRowFieldMatrix;
 import org.apache.commons.math3.linear.EigenDecomposition;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+
+import android.util.Log;
 
 public class QuantumWalk {
 	private static int n;
@@ -61,13 +64,14 @@ public class QuantumWalk {
     	ArrayList<Double> eigenvalues = new ArrayList<Double>();
     	ArrayList<RealMatrix> eigenprojectors = new ArrayList<RealMatrix>();
     	
-    	RealMatrix v = MatrixUtils.createRealMatrix(n, 1);
+    	Log.d("cs350-qwalk", "N: " + n);
+    	RealMatrix v = MatrixUtils.createRealMatrix(n,1);
     	
     	for (int i=0; i<num_rows; i++){
     		boolean found = false;
     		for (int j=0; j<eigenvalues.size(); j++){
     			if (Math.abs(eigenvalue_list[i] - eigenvalues.get(j)) < 0.0001){
-    				v.setRow(0, eigenmatrix.getRow(i));
+    				v.setColumn(0, eigenmatrix.getRow(i));
     				eigenprojectors.set(j,(eigenprojectors.get(j)).add(v.multiply(v.transpose())));
     				found = true;
     			}

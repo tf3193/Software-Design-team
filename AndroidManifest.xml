@@ -30,6 +30,10 @@
             android:name=".GraphActivity"
             android:label="@string/title_activity_graph" >
         </activity>
+        <activity
+            android:name=".InstructActivity"
+            android:label="@string/title_activity_instruct" >
+        </activity>
     </application>
 
 </manifest>

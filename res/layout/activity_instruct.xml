@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:id="@+id/widget32"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TableLayout
+		android:id="@+id/widget35"
+		android:layout_width="fill_parent"
+		android:layout_height="1000dp"
+		android:orientation="vertical">
+		<RelativeLayout
+			android:id="@+id/widget36"
+			android:layout_width="fill_parent"
+			android:layout_height="50dp">
+			<Button
+				android:id="@+id/widget58"
+				android:layout_width="150dp"
+				android:layout_height="500dp"
+				android:text="Back to Menu"
+				android:textStyle="bold"
+				android:layout_alignTop="@+id/widget37"
+				android:layout_alignParentRight="true"
+				android:onClick="mainMenuFunc" />
+			<TextView
+				android:id="@+id/widget37"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Instructions"
+				android:textSize="22sp"
+				android:layout_centerVertical="true"
+				android:layout_alignParentLeft="true" />
+		</RelativeLayout>
+		<TableLayout
+		    android:paddingTop="20dp"
+		    android:paddingLeft="20dp">
+			<RelativeLayout
+				android:id="@+id/widget38"
+				android:layout_width="fill_parent"
+				android:layout_height="30dp">
+				<TextView
+					android:id="@+id/widget39"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Create Node:"
+					android:textStyle="bold"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget40"
+				android:layout_width="fill_parent"
+				android:layout_height="45dp">
+				<TextView
+					android:id="@+id/widget41"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="When making a graph simply tap on the screen"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget46"
+				android:layout_width="fill_parent"
+				android:layout_height="30dp">
+				<TextView
+					android:id="@+id/widget47"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Delete Node:"
+					android:textStyle="bold"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget48"
+				android:layout_width="fill_parent"
+				android:layout_height="50dp">
+				<TextView
+					android:id="@+id/widget49"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Change to delete mode in the menu and tap existing node"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget42"
+				android:layout_width="fill_parent"
+				android:layout_height="30dp">
+				<TextView
+					android:id="@+id/widget43"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Create Edge:"
+					android:textStyle="bold"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget44"
+				android:layout_width="fill_parent"
+				android:layout_height="50dp">
+				<TextView
+					android:id="@+id/widget45"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Tap on two seperate nodes with two different fingers at the same time"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget50"
+				android:layout_width="fill_parent"
+				android:layout_height="30dp">
+				<TextView
+					android:id="@+id/widget51"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Delete Edge:"
+					android:textStyle="bold"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget52"
+				android:layout_width="fill_parent"
+				android:layout_height="50dp">
+				<TextView
+					android:id="@+id/widget53"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Tap on two seperate nodes with two different fingers at the same time with an existing edge"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget54"
+				android:layout_width="fill_parent"
+				android:layout_height="30dp">
+				<TextView
+					android:id="@+id/widget55"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Run Quantum Walk:"
+					android:textStyle="bold"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget56"
+				android:layout_width="fill_parent"
+				android:layout_height="50dp">
+				<TextView
+					android:id="@+id/widget57"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="When finished making your graph, click &quot;Run Quantum Walk&quot; in the menu"
+					android:layout_alignParentBottom="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+		</TableLayout>
+	</TableLayout>
+</ScrollView>

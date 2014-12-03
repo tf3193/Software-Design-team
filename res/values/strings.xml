@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_matrix">MatrixActivity</string>
     <string name="title_activity_graph">Design your Graph</string>
+    <string name="title_activity_instruct">InstructActivity</string>
 
 </resources>
