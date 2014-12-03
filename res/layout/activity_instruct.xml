@@ -155,7 +155,7 @@
 					android:id="@+id/widget57"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="When finished making your graph, click &quot;Run Quantum Walk&quot; in the menu"
+					android:text="When finished making your graph, click &quot;Quantum Walk&quot; option in the menu"
 					android:layout_alignParentBottom="true"
 					android:layout_alignParentLeft="true" />
 			</RelativeLayout>

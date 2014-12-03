@@ -162,7 +162,7 @@ public class GraphView extends SurfaceView implements
 					}
 				}
 			}
-			if (nodeUnderFinger1 != null && nodeUnderFinger2 != null) {
+			if (nodeUnderFinger1 != null && nodeUnderFinger2 != null && !qwalkIsRunning) {
 				int edgeexist = checkforedge(nodeUnderFinger1, nodeUnderFinger2);
 				Log.d("cs350-graph", "edgeexist = " + edgeexist);
 				if(edgeexist != -1){
@@ -186,6 +186,7 @@ public class GraphView extends SurfaceView implements
 		}*/
 	}
 	
+	//Checks to see if an edge already exists between two nodes and returns index
 	public int checkforedge(GraphNodeEntity n1, GraphNodeEntity n2){
 		int size = edges.size();
 		for(int i = 0; i<size; i++){
@@ -211,9 +212,10 @@ public class GraphView extends SurfaceView implements
 //			nodes.add(currentDragNode);
 //			currentDragNode = new GraphNodeEntity(-99, -99,
 //					mLinePaintTouchPointCircle);
-			nodes.add(new GraphNodeEntity(event.getX(), event.getY(), mLinePaintTouchPointCircle));
+			if(!qwalkIsRunning && !deleteMode){
+				nodes.add(new GraphNodeEntity(event.getX(), event.getY(), mLinePaintTouchPointCircle));
+			}
 		}
-		
 		invalidate();
 		return multiTouchController.onTouchEvent(event);
 	}
@@ -225,7 +227,7 @@ public class GraphView extends SurfaceView implements
 
 		float x = touchPoint.getX(), y = touchPoint.getY();
 		for (GraphNodeEntity gne : nodes) {
-			if (gne.containsPoint(x, y)) {
+			if (gne.containsPoint(x, y) && !qwalkIsRunning) {
 				dragging = true;
 				return gne;
 			}
@@ -329,6 +331,10 @@ public class GraphView extends SurfaceView implements
 	}
 	public double[][] getAdjMatrix(){
 		return matrix;
+	}
+	
+	public boolean getqwalkIsRunning(){
+		return qwalkIsRunning;
 	}
 
 	public void qwalk_me(){

@@ -50,8 +50,10 @@ public class GraphActivity extends ActionBarActivity {
 			return true;
 		}
 		if (id == R.id.toggleDelete){
-			item.setChecked(!item.isChecked());
-			graphView.setDeleteMode(item.isChecked());
+			if(!graphView.getqwalkIsRunning()){
+				item.setChecked(!item.isChecked());
+				graphView.setDeleteMode(item.isChecked());
+			}
 		}
 		if (id == R.id.matrixItem){
 			Intent intent = new Intent(this, MatrixActivity.class);
