@@ -11,20 +11,23 @@ import android.webkit.WebView;
 import android.widget.EditText;
 
 public class MainActivity extends ActionBarActivity {
-	private GraphView graphView;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        graphView = new GraphView(this);
 		setContentView(R.layout.activity_main);
     }
 
-    public void clickFunc(View view){
+    public void makeGraphFunc(View view){
     	Intent intent = new Intent(this, GraphActivity.class);
     	startActivity(intent);
     }
- 
+    
+    public void instructFunc(View view){
+    	Intent intent = new Intent(this, InstructActivity.class);
+    	startActivity(intent);
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

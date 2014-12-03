@@ -19,7 +19,6 @@ public class GraphActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		graphView = new GraphView(this);
 		setContentView(graphView);
 	}
