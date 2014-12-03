@@ -15,6 +15,7 @@ import android.view.MenuItem;
 public class GraphActivity extends Activity {
 	
 	private GraphView graphView;
+	private Thread qwalkThread;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,15 @@ public class GraphActivity extends Activity {
 		graphView = new GraphView(this);
 		setContentView(graphView);
 	}
-
+	
+	@Override
+	protected void onPause() {
+		if (qwalkThread != null){
+			qwalkThread.interrupt();
+		}
+		super.onPause();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -38,6 +47,10 @@ public class GraphActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
+		}
+		if (id == R.id.toggleDelete){
+			item.setChecked(!item.isChecked());
+			graphView.setDeleteMode(item.isChecked());
 		}
 		if (id == R.id.matrixItem){
 			Intent intent = new Intent(this, MatrixActivity.class);
@@ -56,6 +69,8 @@ public class GraphActivity extends Activity {
 			if (item.getTitle().equals("Stop Walk")){
 				Log.d("cs350-thread", "Stopped walk");
 				graphView.stop_qwalk();
+				qwalkThread.interrupt();
+				item.setTitle("Quantum Walk");
 				return true;
 			}
 			
@@ -68,7 +83,8 @@ public class GraphActivity extends Activity {
 				}
 			};
 			
-			new Thread(r).start();
+			qwalkThread = new Thread(r);
+			qwalkThread.start();
 //			
 //			graphView.calculateMatrix();
 //			graphView.qwalk_me();

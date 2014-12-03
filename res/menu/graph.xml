@@ -9,5 +9,6 @@
         android:title="@string/action_settings"/>
     <item android:id="@+id/matrixItem" android:title="Calculate Matrix" android:titleCondensed="Matrix"></item>
     <item android:id="@+id/qwalk" android:title="Quantum Walk" android:titleCondensed="QWalk"></item>
+    <item android:id="@+id/toggleDelete" android:title="Delete Mode" android:checkable="true" android:checked="false"></item>
 
 </menu>
