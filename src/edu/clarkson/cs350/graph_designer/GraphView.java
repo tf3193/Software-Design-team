@@ -9,9 +9,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -77,6 +75,7 @@ public class GraphView extends SurfaceView implements
 	private final Resources res = getResources();
 	private final Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.graphbackground);
 	
+	
 	// -------
 
 	public GraphView(Context context) {
@@ -104,7 +103,7 @@ public class GraphView extends SurfaceView implements
 		Resources res = context.getResources();
 
 		// Set up the colors and line width of the circles and lines
-		mLinePaintTouchPointCircle.setColor(Color.YELLOW);
+		mLinePaintTouchPointCircle.setColor(Color.rgb(0, 139, 139));
 		mLinePaintTouchPointCircle.setStrokeWidth(5);
 		mLinePaintTouchPointCircle.setStyle(Style.FILL);
 		mLinePaintTouchPointCircle.setAntiAlias(true);
@@ -141,7 +140,7 @@ public class GraphView extends SurfaceView implements
 		canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 		Rect rect = new Rect(0,0,this.displayWidth,this.displayHeight);
 		canvas.drawBitmap(bitmap, null, rect, null);
-		//canvas.drawColor(Color.rgb(100, 0, 100));
+		//canvas.drawColor(Color.rgb(112,128,144));
 		// Draw every node in the "nodes" ArrayList
 		for (GraphNodeEntity x : nodes) {
 			x.draw(canvas);
