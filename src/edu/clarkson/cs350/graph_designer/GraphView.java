@@ -30,11 +30,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
-/*
- * Known Bugs:
- * TODO: Random nodes created when dragging an existing node
- */
-
 public class GraphView extends SurfaceView implements
 		MultiTouchObjectCanvas<MultiTouchEntity> {
 	
@@ -51,15 +46,10 @@ public class GraphView extends SurfaceView implements
 	private PointInfo currTouchPoint = new PointInfo();
 	private Paint mLinePaintTouchPointCircle = new Paint();
 
-	private static final float SCREEN_MARGIN = 100;
-
-	/*private GraphNodeEntity currentDragNode = new GraphNodeEntity(-99, -99,
-			mLinePaintTouchPointCircle);*/
-
 	private boolean dragging = false;
 	private boolean deleteMode = false;
 
-	private int width, height, displayWidth, displayHeight;
+	private int displayWidth, displayHeight;
 	private boolean qwalkIsRunning = false;
 	
 	private double[][] matrix;
@@ -99,7 +89,6 @@ public class GraphView extends SurfaceView implements
 		mLinePaintTouchPointCircle.setStyle(Style.FILL);
 		mLinePaintTouchPointCircle.setAntiAlias(true);
 		setBackgroundResource(R.drawable.graphbackground);
-		//setBackgroundColor(Color.rgb(100, 0, 100));
 		
 		DisplayMetrics metrics = res.getDisplayMetrics();
 		this.displayWidth = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math
@@ -125,21 +114,12 @@ public class GraphView extends SurfaceView implements
 		 * This method is called any time the screen needs to be re-drawn (when
 		 * invalidate() is called).
 		 */
-		// Log.d("cs350-graph", "nodes: " + nodes.toString());
 
 		super.onDraw(canvas);
 		canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 		Rect rect = new Rect(0,0,this.displayWidth,this.displayHeight);
 		canvas.drawBitmap(bitmap, null, rect, null);
-		//canvas.drawColor(Color.rgb(112,128,144));
 		// Draw every node in the "nodes" ArrayList
-		for (GraphNodeEntity x : nodes) {
-			x.draw(canvas);
-		}
-		for (GraphEdgeEntity x : edges) {
-			x.draw(canvas);
-		}
-
 		// Set xs and ys to arrays of points, one for each finger
 		// Set numPoints to the number of fingers touching the screen
 		float[] xs = currTouchPoint.getXs();
@@ -162,26 +142,21 @@ public class GraphView extends SurfaceView implements
 			}
 			if (nodeUnderFinger1 != null && nodeUnderFinger2 != null && !qwalkIsRunning) {
 				int edgeexist = checkforedge(nodeUnderFinger1, nodeUnderFinger2);
-				Log.d("cs350-graph", "edgeexist = " + edgeexist);
 				if(edgeexist != -1){
-					edges.remove(edgeexist); //somehow delete when touched
-					//invalidate();
+					edges.remove(edgeexist);
 				}else{
 					GraphEdgeEntity newEdge = new GraphEdgeEntity(nodeUnderFinger1,
 							nodeUnderFinger2, mLinePaintTouchPointCircle);
 					edges.add(newEdge);
-					newEdge.draw(canvas);	
 				}
 			}
 		} 
-		/*else if (numPoints == 1) {
-			if (getDraggableObjectAtPoint(currTouchPoint) == null && !dragging) {
-				Log.d("cs350-graph", "not removing");
-				// draw a new node
-				currentDragNode.setXY(xs[0], ys[0]);
-				currentDragNode.draw(canvas);
-			} 
-		}*/
+		for (GraphNodeEntity x : nodes) {
+			x.draw(canvas);
+		}
+		for (GraphEdgeEntity x : edges) {
+			x.draw(canvas);
+		}
 	}
 	
 	//Checks to see if an edge already exists between two nodes and returns index
@@ -199,17 +174,7 @@ public class GraphView extends SurfaceView implements
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_UP
-				//&& currentDragNode.getCenterX() >= 0
-				&& !dragging
-				/*&& currentDragNode.containsPoint(event.getX(), event.getY())*/) {
-			// If the touch action is lifting their finger,
-			// and "currentDragNode" has changed, add a new node
-//			Log.d("cs350-graph",
-//					"Adding new node " + currentDragNode.toString()
-//							+ " to nodes list");
-//			nodes.add(currentDragNode);
-//			currentDragNode = new GraphNodeEntity(-99, -99,
-//					mLinePaintTouchPointCircle);
+				&& !dragging) {
 			if(!qwalkIsRunning && !deleteMode && nodes.size() < 15){
 				nodes.add(new GraphNodeEntity(event.getX(), event.getY(), mLinePaintTouchPointCircle, nodes.size()+1));
 			}
@@ -220,7 +185,6 @@ public class GraphView extends SurfaceView implements
 
 	@Override
 	public MultiTouchEntity getDraggableObjectAtPoint(PointInfo touchPoint) {
-		//Log.d("cs350-graph", "GraphView getDraggableObjectAtPoint called");
 		currTouchPoint.set(touchPoint);
 
 		float x = touchPoint.getX(), y = touchPoint.getY();
@@ -237,14 +201,12 @@ public class GraphView extends SurfaceView implements
 	@Override
 	public boolean pointInObjectGrabArea(PointInfo touchPoint,
 			MultiTouchEntity obj) {
-		Log.d("cs350-graph", "GraphView pointInObjectGrabArea called");
 		return obj.containsPoint(touchPoint.getX(), touchPoint.getY());
 	}
 
 	@Override
 	public void getPositionAndScale(MultiTouchEntity obj,
 			PositionAndScale objPosAndScaleOut) {
-		Log.d("cs350-graph", "GraphView getPositionAndScale called");
 
 		objPosAndScaleOut.set(obj.getCenterX(), obj.getCenterY(),
 				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) == 0,
@@ -257,7 +219,6 @@ public class GraphView extends SurfaceView implements
 	@Override
 	public boolean setPositionAndScale(MultiTouchEntity obj,
 			PositionAndScale newObjPosAndScale, PointInfo touchPoint) {
-		Log.d("cs350-graph", "GraphView setPositionAndScale called");
 
 		currTouchPoint.set(touchPoint);
 		
@@ -272,16 +233,13 @@ public class GraphView extends SurfaceView implements
 
 	@Override
 	public void selectObject(MultiTouchEntity obj, PointInfo touchPoint) {
-		Log.d("cs350-delete", "GraphView selectObject called");
 		currTouchPoint.set(touchPoint);
 		if (obj != null) {
-			Log.d("cs350-delete", "deleting1");
 			if (deleteMode){
 				nodes.remove((GraphNodeEntity) obj);
 				
 				for (int i=0; i<edges.size(); i++){
 					if (edges.get(i).getNode1() == (GraphNodeEntity)obj || edges.get(i).getNode2() == (GraphNodeEntity)obj){
-						Log.d("cs350-delete", "deleting4");
 						edges.remove(i);
 						i--;
 					}
@@ -325,8 +283,6 @@ public class GraphView extends SurfaceView implements
 			matrix[i][j] = 1.0;
 			matrix[j][i] = 1.0; // Necessary for bi-directional graphs
 		}
-		
-		Log.d("cs350-matrix", "Matrix: " + Arrays.deepToString(matrix));
 	}
 	public double[][] getAdjMatrix(){
 		return matrix;
@@ -345,7 +301,6 @@ public class GraphView extends SurfaceView implements
     	
     	Complex[][] c = new Complex[n][n];
     	
-        //double[][] d = {{0,1,1},{1,0,1},{1,1,0}};
         for (int i = 0; i<n; i++){
         	for (int j = 0; j<n; j++){
             	c[i][j] = new Complex(matrix[i][j]);

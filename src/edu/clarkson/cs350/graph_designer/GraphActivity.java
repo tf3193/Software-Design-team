@@ -52,7 +52,6 @@ public class GraphActivity extends ActionBarActivity {
 		if (id == R.id.matrixItem){
 			Intent intent = new Intent(this, MatrixActivity.class);
 			Bundle bundle = new Bundle();
-			
 			graphView.calculateMatrix();
 			double[][] matrix = graphView.getAdjMatrix();
 			bundle.putSerializable("matrix", matrix);
@@ -64,7 +63,6 @@ public class GraphActivity extends ActionBarActivity {
 		}
 		if (id == R.id.qwalk){
 			if (item.getTitle().equals("Stop Walk")){
-				Log.d("cs350-thread", "Stopped walk");
 				graphView.stop_qwalk();
 				qwalkThread.interrupt();
 				item.setTitle("Quantum Walk");
@@ -74,7 +72,6 @@ public class GraphActivity extends ActionBarActivity {
 			final Runnable r = new Runnable() {
 				@Override
 				public void run() {
-					Log.d("cs350-thread", "Thread is running");
 					graphView.calculateMatrix();
 					graphView.qwalk_me();
 				}
@@ -82,9 +79,6 @@ public class GraphActivity extends ActionBarActivity {
 			
 			qwalkThread = new Thread(r);
 			qwalkThread.start();
-//			
-//			graphView.calculateMatrix();
-//			graphView.qwalk_me();
 			item.setTitle("Stop Walk");
 			return true;
 		}

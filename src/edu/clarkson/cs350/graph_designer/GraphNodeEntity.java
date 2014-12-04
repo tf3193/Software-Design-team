@@ -23,7 +23,6 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 	
 	public GraphNodeEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public GraphNodeEntity(float x, float y, Paint p, int ind) {
@@ -39,17 +38,13 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 
 	@Override
 	public void draw(Canvas canvas) {
-		//Log.d("cs350-graph", "GraphNodeEntity draw(canvas) called");
 		float x = this.getCenterX();
 		float y = this.getCenterY();
 		canvas.drawCircle(x,y,RADIUS,paint);
 		String str = ""+index;
 		Paint drawpaint = new Paint();
-		//canvas.drawPaint(drawpaint);
 		drawpaint.setTextSize(20);
 		drawpaint.setColor(Color.BLACK);
-		//difpaint.setStyle(paint.getStyle());
-		//difpaint.setAntiAlias(paint.isAntiAlias());
 		canvas.drawText(str, x-RADIUS, y-RADIUS, drawpaint);
 	}
 	
@@ -82,13 +77,11 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 
 	@Override
 	public void load(Context context, float startMidX, float startMidY) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void unload() {
-		// TODO Auto-generated method stub
 
 	}
 	
@@ -103,7 +96,6 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		int base = super.hashCode();
 		base += mCenterX*mCenterY;
 		base += 13;

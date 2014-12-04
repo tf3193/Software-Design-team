@@ -34,17 +34,12 @@ public class MatrixActivity extends Activity {
 		n = intent.getIntExtra("size", 0);
 		
 		rawMatrix = new double[n][n];
-		
-		Log.d("cs350-matrix", "N: " + n);
-		Log.d("cs350-matrix", "Matrix2: " + Arrays.deepToString(tmpArr));
+
 		for (int i=0; i<n; i++){
-			Log.d("cs350-matrix", "i "+i);
 			for (int j=0; j<n; j++){
-				Log.d("cs350-matrix", "j "+j);
 				rawMatrix[i][j] = ((double[])((Object[])tmpArr)[i])[j];
 			}
 		}
-		Log.d("cs350-matrix", "Matrix after: " + Arrays.deepToString(rawMatrix));
 		
 		realMatrix = MatrixUtils.createRealMatrix(rawMatrix);
 

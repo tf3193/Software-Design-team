@@ -56,14 +56,12 @@ public class QuantumWalk {
     	double[] eigenvalue_list = eig.getRealEigenvalues();
     	RealMatrix row_eigenmatrix = eig.getV();
     	int num_rows = n;
-    	int num_cols = n;
     	
     	RealMatrix eigenmatrix = row_eigenmatrix.transpose();
     	
     	ArrayList<Double> eigenvalues = new ArrayList<Double>();
     	ArrayList<RealMatrix> eigenprojectors = new ArrayList<RealMatrix>();
     	
-    	Log.d("cs350-qwalk", "N: " + n);
     	RealMatrix v = MatrixUtils.createRealMatrix(n,1);
     	
     	for (int i=0; i<num_rows; i++){
