@@ -210,7 +210,7 @@ public class GraphView extends SurfaceView implements
 //			nodes.add(currentDragNode);
 //			currentDragNode = new GraphNodeEntity(-99, -99,
 //					mLinePaintTouchPointCircle);
-			if(!qwalkIsRunning && !deleteMode){
+			if(!qwalkIsRunning && !deleteMode && nodes.size() < 15){
 				nodes.add(new GraphNodeEntity(event.getX(), event.getY(), mLinePaintTouchPointCircle, nodes.size()+1));
 			}
 		}
