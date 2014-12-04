@@ -7,7 +7,6 @@ import org.metalev.multitouch.controller.MultiTouchEntity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 /**
  * This class represents an Edge on the graph

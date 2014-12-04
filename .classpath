@@ -5,7 +5,8 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="/home/troy/workspace/appcompat_v7/libs/android-support-v7-appcompat.jar"/>
-	<classpathentry kind="lib" path="/home/troy/workspace/appcompat_v7/libs/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/golden/workspace/appcompat_v7/libs/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/golden/workspace/appcompat_v7/libs/android-support-v7-appcompat.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/commons-math3-3.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -1,7 +1,6 @@
 package edu.clarkson.cs350.graph_designer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import org.metalev.multitouch.controller.MultiTouchEntity;
 
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 
 
 /**
@@ -46,12 +44,13 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 		float y = this.getCenterY();
 		canvas.drawCircle(x,y,RADIUS,paint);
 		String str = ""+index;
-		Paint difpaint = new Paint();
-		difpaint.setStrokeWidth(paint.getStrokeWidth());
-		difpaint.setColor(Color.BLACK);
-		difpaint.setStyle(paint.getStyle());
-		difpaint.setAntiAlias(paint.isAntiAlias());
-		canvas.drawText(str, x-RADIUS, y-RADIUS, difpaint);
+		Paint drawpaint = new Paint();
+		//canvas.drawPaint(drawpaint);
+		drawpaint.setTextSize(20);
+		drawpaint.setColor(Color.BLACK);
+		//difpaint.setStyle(paint.getStyle());
+		//difpaint.setAntiAlias(paint.isAntiAlias());
+		canvas.drawText(str, x-RADIUS, y-RADIUS, drawpaint);
 	}
 	
 	public void setX(float x){

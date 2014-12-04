@@ -11,10 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 public class MatrixActivity extends Activity {
 	ArrayList<GraphNodeEntity> nodes;
@@ -62,7 +59,31 @@ public class MatrixActivity extends Activity {
 		eigenValuesTextView.loadData(Arrays.toString(eig.getRealEigenvalues()),"text/html","utf-8");
 	}
 	
-	private void populateMatrix(){
+	//Converts the matrix in to an html string for the user to view
+	private String matrixToHtmlString(double[][] rawMatrix2){
+		String s = "<table border=1>";
+		
+		for (int i=0; i < n+1; i++){
+			s += "<tr>";
+			for (int j=0; j < n+1; j++){
+				if(i==0 && j!=0){
+					s+= "<td>" + j + "</td>";
+				}else if(i!=0 && j==0){
+					s+= "<td>" + i + "</td>";
+				}else if(i!=0 && j!=0){
+					s += "<td>" + rawMatrix2[i-1][j-1] + "</td>";
+				}else{
+					s += "<td></td>";
+				}
+			}
+			s += "</tr>";
+		}
+		
+		return s;
+	}
+	
+	//maybe not neccesary?
+	/*private void populateMatrix(){
 		int n = nodes.size();
 		int[][] matrix = new int[n][n];
 		
@@ -78,24 +99,18 @@ public class MatrixActivity extends Activity {
 	private String matrixToHtmlString(Integer[][] rawMatrix2){
 		String s = "<table border=1>";
 		
-		for (int i=0; i < n; i++){
+		for (int i=0; i < n+1; i++){
 			s += "<tr>";
-			for (int j=0; j < n; j++){
-				s += "<td>" + rawMatrix2[i][j] + "</td>";
-			}
-			s += "</tr>";
-		}
-		
-		return s;
-	}
-	
-	private String matrixToHtmlString(double[][] rawMatrix2){
-		String s = "<table border=1>";
-		
-		for (int i=0; i < n; i++){
-			s += "<tr>";
-			for (int j=0; j < n; j++){
-				s += "<td>" + rawMatrix2[i][j] + "</td>";
+			for (int j=0; j < n+1; j++){
+				if(i==0 && j!=0){
+					s+= "<td>" + j + "</td>";
+				}else if(i!=0 && j==0){
+					s+= "<td>" + i + "</td>";
+				}else if(i!=0 && j!=0){
+					s += "<td>" + rawMatrix2[i-1][j-1] + "</td>";
+				}else{
+					s += "<td></td>";
+				}
 			}
 			s += "</tr>";
 		}
@@ -113,24 +128,5 @@ public class MatrixActivity extends Activity {
 		}
 		
 		return dblM;
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.matrix, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	}*/
 }

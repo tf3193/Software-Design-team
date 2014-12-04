@@ -1,7 +1,6 @@
 package edu.clarkson.cs350.graph_designer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.linear.Array2DRowFieldMatrix;
