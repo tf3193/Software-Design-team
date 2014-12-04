@@ -155,8 +155,33 @@
 					android:id="@+id/widget57"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="When finished making your graph, click &quot;Quantum Walk&quot; option in the menu"
+					android:text="When finished making your graph, tap the &quot;Quantum Walk&quot; option in the menu"
 					android:layout_alignParentBottom="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget61"
+				android:layout_width="fill_parent"
+				android:layout_height="30dp">
+				<TextView
+					android:id="@+id/widget62"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Check Matrix and Egeinvectors:"
+					android:textStyle="bold"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/widget59"
+				android:layout_width="fill_parent"
+				android:layout_height="45dp">
+				<TextView
+					android:id="@+id/widget60"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="When you have the graph that you want, go to the menu and tap the &quot;Calculate Matrix&quot; option"
+					android:layout_centerVertical="true"
 					android:layout_alignParentLeft="true" />
 			</RelativeLayout>
 		</TableLayout>

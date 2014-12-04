@@ -1,6 +1,7 @@
 package edu.clarkson.cs350.graph_designer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import org.metalev.multitouch.controller.MultiTouchEntity;
 
@@ -20,21 +21,22 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 	
 	private static final int RADIUS = 70; //px
 	private Paint paint;
+	private int index;
 	
 	public GraphNodeEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public GraphNodeEntity(float x, float y, Paint p) {
+	public GraphNodeEntity(float x, float y, Paint p, int ind) {
 		super.mCenterX = x;
 		super.mCenterY = y;
-		
 		paint = new Paint();
 		paint.setColor(p.getColor());
 		paint.setStrokeWidth(p.getStrokeWidth());
 		paint.setStyle(p.getStyle());
 		paint.setAntiAlias(p.isAntiAlias());
+		index = ind;
 	}
 
 	@Override
@@ -43,11 +45,10 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 		float x = this.getCenterX();
 		float y = this.getCenterY();
 		canvas.drawCircle(x,y,RADIUS,paint);
-		String str = "("+x+","+y+")";
-		int size = str.length();
+		String str = ""+index;
 		Paint difpaint = new Paint();
 		difpaint.setStrokeWidth(paint.getStrokeWidth());
-		difpaint.setColor(Color.WHITE);
+		difpaint.setColor(Color.BLACK);
 		difpaint.setStyle(paint.getStyle());
 		difpaint.setAntiAlias(paint.isAntiAlias());
 		canvas.drawText(str, x-RADIUS, y-RADIUS, difpaint);
@@ -66,6 +67,10 @@ public class GraphNodeEntity extends MultiTouchEntity implements Serializable {
 	
 	public void setColor(int color){
 		paint.setColor(color);
+	}
+	
+	public void setIndex(int ind){
+		index = ind;
 	}
 	
 	@Override

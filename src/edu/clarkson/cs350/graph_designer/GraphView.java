@@ -92,6 +92,14 @@ public class GraphView extends SurfaceView implements
 		init(context);
 	}
 
+	public void resetindicies(){
+		int size = nodes.size();
+		for(int i=0; i<size; i++){
+			GraphNodeEntity g = nodes.get(i);
+			g.setIndex(i+1);
+		}
+	}
+	
 	private void init(Context context) {
 		Resources res = context.getResources();
 
@@ -112,9 +120,9 @@ public class GraphView extends SurfaceView implements
 				metrics.widthPixels, metrics.heightPixels);
 
 		// Manually adding nodes/edges to test
-		nodes.add(new GraphNodeEntity(100, 100, mLinePaintTouchPointCircle));
-		nodes.add(new GraphNodeEntity(500, 100, mLinePaintTouchPointCircle));
-		nodes.add(new GraphNodeEntity(300, 300, mLinePaintTouchPointCircle));
+		nodes.add(new GraphNodeEntity(100, 100, mLinePaintTouchPointCircle, nodes.size()+1));
+		nodes.add(new GraphNodeEntity(500, 100, mLinePaintTouchPointCircle, nodes.size()+1));
+		nodes.add(new GraphNodeEntity(300, 300, mLinePaintTouchPointCircle, nodes.size()+1));
 		
 		edges.add(new GraphEdgeEntity(nodes.get(0), nodes.get(1), mLinePaintTouchPointCircle));
 		edges.add(new GraphEdgeEntity(nodes.get(0), nodes.get(2), mLinePaintTouchPointCircle));
@@ -213,7 +221,7 @@ public class GraphView extends SurfaceView implements
 //			currentDragNode = new GraphNodeEntity(-99, -99,
 //					mLinePaintTouchPointCircle);
 			if(!qwalkIsRunning && !deleteMode){
-				nodes.add(new GraphNodeEntity(event.getX(), event.getY(), mLinePaintTouchPointCircle));
+				nodes.add(new GraphNodeEntity(event.getX(), event.getY(), mLinePaintTouchPointCircle, nodes.size()+1));
 			}
 		}
 		invalidate();
